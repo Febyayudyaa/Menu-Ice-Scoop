@@ -2,37 +2,37 @@ import 'package:flutter/material.dart';
 
 // Fungsi utama yang menjadi titik masuk aplikasi
 void main() {
-  runApp(MyApp()); // Menjalankan aplikasi dengan MyApp sebagai widget root
+  runApp(MyApp());
 }
 
-// Kelas MyApp yang merupakan widget statele
+// Kelas MyApp yang merupakan widget stateless
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Yummy App', // Judul aplikasi
-      debugShowCheckedModeBanner: false, // Menonaktifkan banner debug
+      title: 'Yummy App',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.white, // Warna background scaffold
+        scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(
-          backgroundColor: Color.fromARGB(255, 235, 228, 252), // Warna background AppBar
-          foregroundColor: Colors.black, // Warna teks di AppBar
+          backgroundColor: Color.fromARGB(255, 235, 228, 252),
+          foregroundColor: Colors.black,
         ),
       ),
-      home: MyHomePage(title: 'Menu Ice Scoop'), // Halaman utama aplikasi
+      home: MyHomePage(title: 'Menu Ice Scoop'),
     );
   }
 }
 
 // Kelas MyHomePage yang merupakan widget stateful
 class MyHomePage extends StatefulWidget {
-  final String title; // Judul yang diteruskan ke widget ini
+  final String title;
 
-  MyHomePage({Key? key, required this.title}) : super(key: key); // Konstruktor dengan key
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState(); // Mengembalikan instance state
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
 // Kelas state untuk MyHomePage
@@ -41,38 +41,79 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.chevron_left), // Ikon tombol kembali
-          onPressed: () {
-            Navigator.of(context).pop();// Handle back button press (belum diimplementasikan)
-          },
+        title: Text(widget.title),
+        centerTitle: true,
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: CircleAvatar(
+                backgroundImage: AssetImage('asset/image/yummy.jpg'), // Ganti dengan path gambar Anda
+              ),
+              title: Text('Home'),
+              onTap: () {
+                Navigator.pop(context); // Menutup drawer
+              },
+            ),
+            ListTile(
+              leading: CircleAvatar(
+                backgroundImage: AssetImage('asset/image/settings.jpg'), // Ganti dengan path gambar Anda
+              ),
+              title: Text('Settings'),
+              onTap: () {
+                // Tambahkan logika untuk mengalihkan ke halaman pengaturan
+                Navigator.pop(context); // Menutup drawer
+              },
+            ),
+            ListTile(
+              leading: CircleAvatar(
+                backgroundImage: AssetImage('asset/image/about.jpg'), // Ganti dengan path gambar Anda
+              ),
+              title: Text('About'),
+              onTap: () {
+                // Tambahkan logika untuk mengalihkan ke halaman tentang
+                Navigator.pop(context); // Menutup drawer
+              },
+            ),
+          ],
         ),
-        title: Text(widget.title), // Menampilkan judul halaman
-        centerTitle: true, // Mengatur judul agar berada di tengah
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Baris pertama kartu resep
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0), // Padding horizontal
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 children: [
                   Expanded(
-                    child: _buildRecipeCard( // Membuat kartu resep pertama
+                    child: _buildRecipeCard(
                       title: 'Strawberry Delight Ice Cream',
                       rating: 5,
                       time: '10 mnt',
                       price: '18 rb',
                       sellerName: 'Yummy Official',
-                      sellerImage: 'asset/image/yummy.jpg', 
+                      sellerImage: 'asset/image/yummy.jpg',
                       isVerified: true,
-                      imageUrl: 'asset/image/ice strawberry.jpg', 
+                      imageUrl: 'asset/image/ice strawberry.jpg',
                     ),
                   ),
-                  SizedBox(width: 16.0), // Ruang antara kartu
+                  SizedBox(width: 16.0),
                   Expanded(
-                    child: _buildRecipeCard( // Membuat kartu resep kedua
+                    child: _buildRecipeCard(
                       title: 'Creammy Chocolate Ice Cream',
                       rating: 4.9,
                       time: '15 mnt',
@@ -86,18 +127,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            SizedBox(height: 16.0), // Ruang vertikal
-
-            // Baris kedua kartu resep
+            SizedBox(height: 16.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 children: [
                   Expanded(
-                    child: _buildRecipeCard( // Kartu resep ketiga
-                      title: 'Sweet Bluebbery Ice Cream',
+                    child: _buildRecipeCard(
+                      title: 'Sweet Blueberry Ice Cream',
                       rating: 4.9,
-                      time: '15 mnt' ,
+                      time: '15 mnt',
                       price: '22 rb',
                       sellerName: 'Yummy Official',
                       sellerImage: 'asset/image/yummy.jpg',
@@ -107,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   SizedBox(width: 16.0),
                   Expanded(
-                    child: _buildRecipeCard( // Kartu resep keempat
+                    child: _buildRecipeCard(
                       title: 'Sprinkle Birthday Ice Cream',
                       rating: 5,
                       time: '18 mnt',
@@ -139,39 +178,38 @@ class _MyHomePageState extends State<MyHomePage> {
     required String imageUrl,
   }) {
     return Card(
-      color: Color.fromARGB(255, 235, 228, 252), // Warna kartu
-      elevation: 5, // Bayangan untuk kartu
-      child: Stack( // Menggunakan Stack untuk menempatkan elemen
+      color: Color.fromARGB(255, 235, 228, 252),
+      elevation: 5,
+      child: Stack(
         children: [
           Column(
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row( // Menampilkan nama penjual dan gambar
+                child: Row(
                   children: [
                     CircleAvatar(
-                      backgroundImage: AssetImage(sellerImage), // Gambar penjual
+                      backgroundImage: AssetImage(sellerImage),
                       radius: 20.0,
                     ),
                     SizedBox(width: 8.0),
                     Text(
-                      sellerName, // Nama penjual
+                      sellerName,
                       style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
                     ),
-                    Spacer(), // Membuat ruang antara elemen
-                    if (isVerified) // Menampilkan ikon verifikasi jika penjual terverifikasi
+                    Spacer(),
+                    if (isVerified)
                       Icon(Icons.check_circle, color: Colors.blue, size: 16.0),
                   ],
                 ),
               ),
-              // Gambar produk dengan sudut melengkung
               ClipRRect(
-                borderRadius: BorderRadius.circular(16.0), // Membulatkan sudut
+                borderRadius: BorderRadius.circular(16.0),
                 child: Image.asset(
-                  imageUrl, // Menggunakan gambar untuk produk
+                  imageUrl,
                   width: 200,
                   height: 200,
-                  fit: BoxFit.cover, // Mengatur cara gambar ditampilkan
+                  fit: BoxFit.cover,
                 ),
               ),
               Padding(
@@ -180,17 +218,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title, // Judul resep
+                      title,
                       style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 8.0), // Ruang vertikal
+                    SizedBox(height: 8.0),
                     Row(
                       children: [
-                        Icon(Icons.star, color: Colors.orange, size: 40.0,), // Ikon bintang untuk rating
-                        Text('$rating'), // Menampilkan rating
+                        Icon(Icons.star, color: Colors.orange, size: 40.0),
+                        Text('$rating'),
                         SizedBox(width: 10.0),
-                        Icon(Icons.access_time_filled_rounded, color: Colors.grey, size: 28.0,), // Ikon timer untuk waktu
-                        Text(time), // Menampilkan waktu
+                        Icon(Icons.access_time_filled_rounded, color: Colors.grey, size: 28.0),
+                        Text(time),
                       ],
                     ),
                     SizedBox(height: 8.0),
@@ -199,9 +237,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.remove_red_eye, color: Colors.grey, size: 28.0), // Ikon mata untuk melihat
+                            Icon(Icons.remove_red_eye, color: Colors.grey, size: 28.0),
                             SizedBox(width: 4.0),
-                            Text(price), // Menampilkan harga
+                            Text(price),
                           ],
                         ),
                       ],
@@ -211,17 +249,15 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-          // Tombol bookmark
           Positioned(
             bottom: 8.0,
             right: 8.0,
             child: IconButton(
-              icon: Icon(Icons.bookmark_border, color: Colors.black, size: 26.0), // Ikon bookmark
+              icon: Icon(Icons.bookmark_border, color: Colors.black, size: 26.0),
               onPressed: () {
-                // Menampilkan snackbar saat tombol bookmark ditekan
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('$title bookmarked!'), // Pesan snackbar
+                    content: Text('$title bookmarked!'),
                   ),
                 );
               },
